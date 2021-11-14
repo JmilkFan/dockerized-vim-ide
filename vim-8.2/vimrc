@@ -11,6 +11,11 @@ set confirm                               " 存在 .swp 文件时需要确认
 set nofoldenable                          " 不启用折叠
 set hlsearch                              " 高亮搜索关键字
 set ignorecase                            " 搜索/替换时大小写敏感
+set splitright                            " 指定窗口分割时把新窗口放到当前窗口之右
+nmap <leader>v :vsplit<CR>
+set number                                " 显示行号
+set numberwidth=4                         " 指定行号宽度
+set list listchars=tab:>.,trail:.         " 显示 tab、空格的制表符
 
 " 编码选项
 set fileencodings=utf-8,gb2312,gbk
@@ -19,24 +24,6 @@ set termencoding=utf-8
 set encoding=utf-8
 set fileformat=unix
 
-" 布局选项
-set number                                " 显示行号
-set numberwidth=4                         " 指定行号宽度
-"set textwidth=79                          " 指定 text 宽度，慎用，会自动换行
-set colorcolumn=79                        " 指定宽度高亮
-set splitright                            " 指定窗口分割时把新窗口放到当前窗口之右
-set list listchars=tab:>.,trail:.         " 显示 tab、空格的制表符
-nmap <leader>v :vsplit<CR>
-
-" 缩进选项
-set tabstop=4                             " 指定 tap 宽度
-set expandtab                             " 用空格代替 tab
-set shiftwidth=4                          " 指定制表符的宽度
-set softtabstop=4                         " 指定自动缩进的宽度
-set showmatch                             " 显示匹配的括号
-set autoindent
-set smartindent
-
 " 在 insert mode 下开启光标线和光标柱，普通模式时关闭
 autocmd InsertLeave * call ToggleCursor()
 autocmd InsertEnter * call ToggleCursor()
@@ -44,6 +31,22 @@ function ToggleCursor() abort
     set cursorline!
     set cursorcolumn!
 endfunction
+
+" Python 支持
+au BufNewFile,BufRead *.py...
+\ set tabstop=4                             " 指定 tap 宽度
+\ set softtabstop=4                         " 指定自动缩进的宽度
+\ set shiftwidth=4                          " 指定制表符的宽度
+\ set textwidth=79                          " 指定 text 宽度
+\ set colorcolumn=79                        " 指定宽度高亮
+\ set expandtab                             " 用空格代替 tab
+\ set showmatch                             " 显示匹配的括号
+\ set autoindent
+\ set smartindent
+
+" 设置 git commit message 文本宽度及英文拼写检查
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
 
 """""""""""""""""""""""""""""""""""""""" Vundle Plugins
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -86,6 +89,7 @@ set statusline+=%F
 
 
 " nerdtree
+"autocmd VimEnter * NERDTree                                        " 自动开启
 let NERDTreeChDirMode=2                                            " Change current working directory based on root directory in NERDTree
 let g:NERDTreeHidden=0                                             " 不显示隐藏文件
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '^__pycache__$']    " 过滤文件类型
@@ -172,3 +176,6 @@ map <Leader><Leader>k <Plug>(easymotion-j)
 map <Leader><Leader>j <Plug>(easymotion-k)
 map <Leader><leader>l <Plug>(easymotion-lineforward)
 map <Leader><leader>. <Plug>(easymotion-repeat)
+
+" ctags setting
+set tags+=/root/workspace/tf-api-client/build/debug/api-lib/tags
