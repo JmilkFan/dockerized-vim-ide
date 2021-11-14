@@ -6,6 +6,7 @@ MAINTAINER fanguiju
 RUN mkdir /etc/yum.repos.d/backup && mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup
 RUN curl https://mirrors.aliyun.com/repo/Centos-7.repo -o /etc/yum.repos.d/CentOS-Base.repo
 RUN yum install epel-release -y
+RUN yum install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm -y
 RUN yum clean all && yum makecache && yum repolist
 
 # install Ctags

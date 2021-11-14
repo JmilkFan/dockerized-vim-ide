@@ -22,10 +22,11 @@ set fileformat=unix
 " 布局选项
 set number                                " 显示行号
 set numberwidth=4                         " 指定行号宽度
-set textwidth=79                          " 指定 text 宽度，PEP8 为 79
+"set textwidth=79                          " 指定 text 宽度，慎用，会自动换行
 set colorcolumn=79                        " 指定宽度高亮
 set splitright                            " 指定窗口分割时把新窗口放到当前窗口之右
 set list listchars=tab:>.,trail:.         " 显示 tab、空格的制表符
+nmap <leader>v :vsplit<CR>
 
 " 缩进选项
 set tabstop=4                             " 指定 tap 宽度
@@ -48,15 +49,21 @@ endfunction
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'altercation/solarized'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
-Plugin 'scrooloose/nerdtree'
+
+Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'preservim/tagbar'
+Plugin 'ryanoasis/vim-devicons'
+"Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'                  " 卡顿，慎用
+
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'python-mode/python-mode'
+
+Plugin 'preservim/tagbar'
 Plugin 'easymotion/vim-easymotion'
 call vundle#end()
 
@@ -79,15 +86,29 @@ set statusline+=%F
 
 
 " nerdtree
-let NERDChristmasTree=0
-let NERDTreeWinSize=35
-let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '^__pycache__$']
-let NERDTreeShowBookmarks=1
-let NERDTreeWinPos="left"
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let NERDTreeChDirMode=2                                            " Change current working directory based on root directory in NERDTree
+let g:NERDTreeHidden=0                                             " 不显示隐藏文件
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '^__pycache__$']    " 过滤文件类型
+let NERDTreeWinSize=35                                             " Initial NERDTree width
+let NERDTreeWinPos="left"                                          " 左侧窗口
+let NERDTreeShowBookmarks=1                                        " 开启 Nerdtree 时自动显示书签
+let NERDChristmasTree=1
+autocmd vimenter * if !argc() | NERDTree | endif                   " 打开 vim 时如果没有文件则自动打开 NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif  " 当 NERDTree 为剩下的唯一窗口时自动关闭
 nmap <leader>n :NERDTreeToggle<CR>
+let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeGitStatusShowIgnored = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 
 " tagbar
