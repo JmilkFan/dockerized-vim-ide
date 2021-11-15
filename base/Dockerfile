@@ -22,6 +22,7 @@ RUN yum install -y bzip2 zlib-devel make gcc gcc-c++
 # vim dependent
 RUN yum install -y git python-pip python-devel python3 python3-devel ncurses-devel
 RUN pip install cmake
+RUN pip3 install pylint
 
 # zsh dependent
 RUN yum install -y autoconf

@@ -151,22 +151,24 @@ let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
 let g:pymode_breakpoint = 1               " 使用 python-mode 设置断点
 let g:pymode_breakpoint_bind = '<leader>b'
-let g:pymode_rope_goto_definition_bind = '<C-s>' " 显示 function/method defines
+"let g:pymode_rope_goto_definition_bind = '<C-f>' " 显示 function/method defines
 let g:pymode_lint = 1                     " 使用 lint 语法检查
-let g:pymode_lint_on_write = 1
-let g:pymode_lint_on_fly = 0              " 关闭编辑时进行检查
+"let g:pymode_lint_checkers = ['pylint']   " 默认使用 pyflakes，pylint 会更加严格
+let g:pymode_lint_on_write = 1            " :w 关闭编辑时进行检查
+let g:pymode_lint_on_fly = 0              " 关闭编写时进行检查
 let g:pymode_lint_signs = 1               " 显示 python-mode 相关的标志
-let g:pymode_lint_todo_symbol = 'WW'
-let g:pymode_lint_comment_symbol = 'CC'
-let g:pymode_lint_visual_symbol = 'RR'
-let g:pymode_lint_error_symbol = 'EE'
-let g:pymode_lint_info_symbol = 'II'
 let g:pymode_lint_pyflakes_symbol = 'FF'
-let g:pymode_lint_checkers = ['pylint', 'pep8']
+let g:pymode_lint_error_symbol = 'EE'
+let g:pymode_lint_todo_symbol = 'WW'
+let g:pymode_lint_visual_symbol = 'RR'
+let g:pymode_lint_comment_symbol = 'CC'
+let g:pymode_lint_info_symbol = 'II'
 let g:pymode_virtualenv = 1               " 使用 virtualenv
 let g:pymode_motion = 1                   " 使用快捷移动
 let g:pymode_trim_whitespaces = 1         " 保存文件时自动删除无用空格
-let g:pymode_warnings = 0                 " 开启警告
+let g:pymode_warnings = 1                 " 开启警告
+nmap <leader>8 :PymodeLintAuto<CR>
+nmap <leader>l :PymodeLint<CR>
 
 
 " easymotion
